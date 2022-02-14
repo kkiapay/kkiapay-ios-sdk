@@ -27,7 +27,7 @@ private var kkiaPay: KKiaPay{
             phone: "97000000",
             data: "Hello world",
             publicAPIKey: "xxxxxxxxxxxxxxxxxxx",
-            sandbox: true,
+            sandbox: true,//set this to false in production
             theme: "#4E6BFC",
             name: "John Doe",
             callback: "https://redirect.kkiapay.com",
@@ -49,9 +49,8 @@ kkiaPay.onReceive(self.viewModel.paymentData.receive(on: RunLoop.main)){paymentD
     }
 }
 ```
-```swift
+
 The onReceive function of the kkiaPay instance listens to the state of the paymentData and exposes it. 
-```
 
 ## Example
 
@@ -70,7 +69,7 @@ struct ContentView: View {
                     phone: "97000000",
                     data: "Hello world",
                     publicAPIKey: "xxxxxxxxxxxxxxxxxxx",
-                    sandbox: true,
+                    sandbox: true,//set this to false in production
                     theme: "#4E6BFC",
                     name: "John Doe",
                     callback: "https://redirect.kkiapay.com",
@@ -120,3 +119,8 @@ struct ContentView_Previews: PreviewProvider {
 <tr><td>sandbox</td><td>Boolean</td><td>No</td><td>The true value of this attribute allows you to switch to test mode</td></tr>
 <tr><td>successCallback</td><td>Function</td><td>No</td><td>This function is called once the payment has been successfully made</td></tr>
 </table>
+
+### Issues and feedback
+
+Please file [issues](https://github.com/kkiapay/kkiapay-ios-sdk/issues/new)
+to send feedback or report a bug. Thank you!
