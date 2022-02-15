@@ -8,7 +8,10 @@ and create your account is free and without pain :sunglasses:.
 
 
 ## Usage
+##### Add the KKiaPay package to your project
+You can add this package to you project using the Swift Package Manager.
 
+##### Import the KKiaPay module
 ```swift
 import KKiaPaySDK;
 ```
@@ -30,6 +33,7 @@ private var kkiaPay: KKiaPay{
             sandbox: true,//set this to false in production
             theme: "#4E6BFC",
             name: "John Doe",
+            email:"user@email.com",
             callback: "https://redirect.kkiapay.com",
             viewModel:viewModel
     )
@@ -72,6 +76,7 @@ struct ContentView: View {
                     sandbox: true,//set this to false in production
                     theme: "#4E6BFC",
                     name: "John Doe",
+                    email:"user@email.com",
                     callback: "https://redirect.kkiapay.com",
                     viewModel:viewModel
             )
@@ -111,9 +116,10 @@ struct ContentView_Previews: PreviewProvider {
 
 <table>
 <tr><td>Argument</td><td>Type</td><td>Required</td><td>Details</td></tr>
-<tr><td>phone</td><td>String</td><td>Yes</td><td>Valid mobile money number to debit. ex : 22967434270 </td></tr>
+<tr><td>phone</td><td>String</td><td>Yes</td><td>Valid mobile money number to debit. ex : 22997000000 </td></tr>
 <tr><td>amount</td><td>Numeric</td><td>Yes</td><td>Amount to debit from user account (XOF) </td></tr>
 <tr><td>name</td><td>String</td><td>No</td><td>Client firstname and lastname </td></tr>
+<tr><td>email</td><td>String</td><td>No</td><td>Client email address </td></tr>
 <tr><td>theme</td><td>String</td><td>No</td><td> the hexadecimal code of the color you want to give to your widget </td></tr>
 <tr><td>apikey</td><td>String</td><td>Yes</td><td>public api key</td></tr>
 <tr><td>sandbox</td><td>Boolean</td><td>No</td><td>The true value of this attribute allows you to switch to test mode</td></tr>
