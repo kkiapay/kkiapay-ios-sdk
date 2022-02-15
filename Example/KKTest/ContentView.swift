@@ -15,12 +15,13 @@ struct ContentView: View {
         private var kkiaPay: KKiaPay{
             KKiaPay(amount: "3000",
                     phone: "97000000",
-                    publicAPIKey: "f1e7270098f811e99eae1f0cfc677927",
+                    publicAPIKey: "xxxxxxxxxxxxxxxxxxx",
                     data: "Hello world",
                     sandbox: true,
                     theme: "#4E6BFC",
                     name: "John Doe",
-                    callback: "http://redirect.kkiapay.com",
+                    email:"user@email.com",
+                    callback: "https://redirect.kkiapay.com",
                     viewModel:viewModel
             )
         }

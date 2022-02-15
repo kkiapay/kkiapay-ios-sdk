@@ -25,6 +25,7 @@ public struct KKiaPay: UIViewRepresentable {
     let sandbox:Bool?
     let theme:String?
     let name:String?
+    let email:String?
     let callback:String?
     
     @ObservedObject public var viewModel : KKiaPayViewModel
@@ -36,6 +37,7 @@ public struct KKiaPay: UIViewRepresentable {
                 sandbox:Bool,
                 theme:String,
                 name:String,
+                email:String,
                 callback:String,
                 viewModel:KKiaPayViewModel) {
         self.amount=amount
@@ -45,13 +47,14 @@ public struct KKiaPay: UIViewRepresentable {
         self.sandbox=sandbox
         self.theme=theme
         self.name=name
+        self.email=email
         self.callback=callback
         self.viewModel=viewModel
     }
     
     private func base64EncodedUrl() -> String {
         
-        let encodedData = Data("{\"amount\":\"\(amount ?? "")\",\"phone\": \"\(phone ?? "")\",\"data\": \"\(data ?? "")\",\"key\": \"\(publicAPIKey ?? "")\",\"sandbox\":\(sandbox ?? true),\"theme\": \"\(theme ?? "")\", \"name\": \"\(name ?? "")\",\"callback\": \"\(callback ?? "")\",\"sdk\":\"android\",\"host\":\"com.package.name\",\"reason\":\"\"}".utf8).base64EncodedString()
+        let encodedData = Data("{\"amount\":\"\(amount ?? "")\",\"phone\": \"\(phone ?? "")\",\"data\": \"\(data ?? "")\",\"key\": \"\(publicAPIKey ?? "")\",\"sandbox\":\(sandbox ?? true),\"theme\": \"\(theme ?? "")\", \"name\": \"\(name ?? "")\", \"email\": \"\(email ?? "")\",\"callback\": \"\(callback ?? "")\",\"sdk\":\"android\",\"host\":\"com.package.name\",\"reason\":\"\"}".utf8).base64EncodedString()
         
         return "https://widget-v2.kkiapay.me/?="+encodedData
         
