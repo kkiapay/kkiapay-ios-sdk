@@ -66,10 +66,11 @@ struct ContentView: View {
         //Create a view model instance to use later
         @ObservedObject var viewModel = KKiaPayViewModel()
         @State private var showWebView = false
+        @State var text = "Pay Now"
         
         //Initialise the Kkiapay Instance
         private var kkiaPay: KKiaPay{
-            KKiaPay(amount: "3000",
+            KKiaPay(amount: 3000,
                     phone: "97000000",
                     data: "Hello world",
                     publicAPIKey: "xxxxxxxxxxxxxxxxxxx",
@@ -86,20 +87,23 @@ struct ContentView: View {
             Button {
                 showWebView.toggle()
             } label: {
-                Text("Pay")
+                Text(self.text)
             }
             .sheet(isPresented: $showWebView) {
                 
-                //Get the transaction data back 
                 kkiaPay.onReceive(self.viewModel.paymentData.receive(on: RunLoop.main)){paymentData in
                     
                     if(paymentData.isSuccessful){
-                        print("The amount of the transaction is " + paymentData.amount+" with id "+paymentData.transactionId)
+                        
+                        self.text = "PAYMENT WAS SUCCESSFUL \n\nThe amount of the transaction is \(paymentData.amount) Fcfa with id \(paymentData.transactionId)"
+                    
+                        print("The amount of the transaction is \(paymentData.amount) with id \(paymentData.transactionId)")
                         showWebView = false
-                    }else{
+                    }else {
                         print("The payment was not successful")
                     }
                 }
+                
             }
         }
 }
