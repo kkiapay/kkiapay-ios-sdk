@@ -54,9 +54,9 @@ public struct KKiaPay: UIViewRepresentable {
     
     private func base64EncodedUrl() -> String {
         
-        let encodedData = Data("{\"amount\":\"\(amount ?? "")\",\"phone\": \"\(phone ?? "")\",\"data\": \"\(data ?? "")\",\"key\": \"\(publicAPIKey ?? "")\",\"sandbox\":\(sandbox ?? true),\"theme\": \"\(theme ?? "")\", \"name\": \"\(name ?? "")\", \"email\": \"\(email ?? "")\",\"callback\": \"\(callback ?? "")\",\"sdk\":\"ios\",\"reason\":\"\"}".utf8).base64EncodedString()
+        let encodedData = Data("{\"serviceId\":\"INTEGRATION\",\"amount\":\"\(amount ?? "")\",\"phone\": \"\(phone ?? "")\",\"data\": \"\(data ?? "")\",\"key\": \"\(publicAPIKey ?? "")\",\"sandbox\":\(sandbox ?? true),\"theme\": \"\(theme ?? "")\", \"name\": \"\(name ?? "")\", \"email\": \"\(email ?? "")\",\"callback\": \"\(callback ?? "")\",\"sdk\":\"ios\",\"reason\":\"\"}".utf8).base64EncodedString()
         
-        return "https://widget-v2.kkiapay.me/?="+encodedData
+        return "https://widget-v3.kkiapay.me/?"+encodedData
         
     }
     
