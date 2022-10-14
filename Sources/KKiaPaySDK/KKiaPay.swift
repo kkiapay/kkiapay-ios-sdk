@@ -26,6 +26,9 @@ public struct KKiaPay: UIViewRepresentable {
     let theme:String?
     let name:String?
     let email:String?
+    let partnerId:String?
+    let countries:[String]?
+    let paymentMethods:[String]?
     let callback:String?
 
     @ObservedObject public var viewModel : KKiaPayViewModel
@@ -33,6 +36,9 @@ public struct KKiaPay: UIViewRepresentable {
     public init(amount:Int,
                 phone:String,
                 publicAPIKey:String,
+                partnerId:String?,
+                countries:[String]?,
+                paymentMethods:[String]?,
                 data:String,
                 sandbox:Bool,
                 theme:String,
@@ -43,6 +49,9 @@ public struct KKiaPay: UIViewRepresentable {
         self.amount=amount
         self.phone=phone
         self.publicAPIKey=publicAPIKey
+        self.countries=countries
+        self.partnerId=partnerId
+        self.paymentMethods=paymentMethods
         self.data=data
         self.sandbox=sandbox
         self.theme=theme
@@ -54,7 +63,7 @@ public struct KKiaPay: UIViewRepresentable {
 
     private func base64EncodedUrl() -> String {
 
-        let encodedData = Data("{\"paymentMethods\":[\"momo\",\"card\",\"direct_debit\"],\"position\":\"left\",\"serviceId\":\"INTEGRATION\",\"amount\":\(amount ?? 1),\"phoneNumber\": \"\(phone ?? "")\",\"data\": \"\(data ?? "")\",\"key\": \"\(publicAPIKey ?? "")\",\"sandbox\":\(sandbox ?? true),\"theme\":\"\(theme ?? "")\",\"fullname\":\"\(name ?? "")\",\"email\": \"\(email ?? "")\",\"callback\": \"\(callback ?? "")\",\"sdk\":\"ios\",\"reason\":\"\"}".utf8).base64EncodedString()
+        let encodedData = Data("{\"paymentMethods\":\(paymentMethods ?? ["momo","card"]),\"countries\":\(countries ?? ["BJ","CI"]),\"position\":\"left\",\"partnerId\":\"\(partnerId ?? "")\",\"serviceId\":\"INTEGRATION\",\"amount\":\(amount ?? 1),\"phoneNumber\": \"\(phone ?? "")\",\"data\": \"\(data ?? "")\",\"key\": \"\(publicAPIKey ?? "")\",\"sandbox\":\(sandbox ?? true),\"theme\":\"\(theme ?? "")\",\"fullname\":\"\(name ?? "")\",\"email\": \"\(email ?? "")\",\"callback\": \"\(callback ?? "")\",\"sdk\":\"ios\",\"reason\":\"\"}".utf8).base64EncodedString()
         return "https://widget-v3.kkiapay.me/?"+encodedData
 
     }
