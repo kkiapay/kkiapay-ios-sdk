@@ -26,10 +26,13 @@ import KKiaPaySDK;
 
 ```swift
 private var kkiaPay: KKiaPay{
-    KKiaPay(amount: "3000",
-            phone: "97000000",
-            data: "Hello world",
+    KKiaPay(amount: 3000,
+            phone: "22997000000",
             publicAPIKey: "xxxxxxxxxxxxxxxxxxx",
+            partnerId: "AxXxXXxId",
+            countries: ["BJ"],
+            paymentMethods: ["momo","card"],
+            data: "Hello world",
             sandbox: true,//set this to false in production
             theme: "#4E6BFC",
             name: "John Doe",
@@ -40,7 +43,7 @@ private var kkiaPay: KKiaPay{
 }
 ```
 
-##### Get the transaction data back 
+##### Get the transaction data back
 Once the payment is successful, the KKiaPayViewModel sends a KKiaPayTransactionData to the calling view via the onReceive callback.
 ```swift
 kkiaPay.onReceive(self.viewModel.paymentData.receive(on: RunLoop.main)){paymentData in
@@ -54,7 +57,7 @@ kkiaPay.onReceive(self.viewModel.paymentData.receive(on: RunLoop.main)){paymentD
 }
 ```
 
-The onReceive function of the kkiaPay instance listens to the state of the paymentData and exposes it. 
+The onReceive function of the kkiaPay instance listens to the state of the paymentData and exposes it.
 
 ## Example
 
@@ -66,13 +69,17 @@ struct ContentView: View {
         //Create a view model instance to use later
         @ObservedObject var viewModel = KKiaPayViewModel()
         @State private var showWebView = false
+        @State var text = "Pay Now"
         
         //Initialise the Kkiapay Instance
         private var kkiaPay: KKiaPay{
-            KKiaPay(amount: "3000",
-                    phone: "97000000",
-                    data: "Hello world",
+            KKiaPay(amount: 3000,
+                    phone: "22997000000",
                     publicAPIKey: "xxxxxxxxxxxxxxxxxxx",
+                    partnerId: "AxXxXXxId",
+                    countries: ["BJ"],
+                    paymentMethods: ["momo","card"],
+                    data: "Hello world",
                     sandbox: true,//set this to false in production
                     theme: "#4E6BFC",
                     name: "John Doe",
@@ -86,7 +93,7 @@ struct ContentView: View {
             Button {
                 showWebView.toggle()
             } label: {
-                Text("Pay")
+                Text(self.text)
             }
             .sheet(isPresented: $showWebView) {
                 
@@ -94,12 +101,16 @@ struct ContentView: View {
                 kkiaPay.onReceive(self.viewModel.paymentData.receive(on: RunLoop.main)){paymentData in
                     
                     if(paymentData.isSuccessful){
-                        print("The amount of the transaction is " + paymentData.amount+" with id "+paymentData.transactionId)
+                        
+                        self.text = "PAYMENT WAS SUCCESSFUL \n\nThe amount of the transaction is \(paymentData.amount) Fcfa with id \(paymentData.transactionId)"
+                    
+                        print("The amount of the transaction is \(paymentData.amount) with id \(paymentData.transactionId)")
                         showWebView = false
-                    }else{
+                    }else {
                         print("The payment was not successful")
                     }
                 }
+                
             }
         }
 }
@@ -116,14 +127,16 @@ struct ContentView_Previews: PreviewProvider {
 
 <table>
 <tr><td>Argument</td><td>Type</td><td>Required</td><td>Details</td></tr>
-<tr><td>phone</td><td>String</td><td>Yes</td><td>Valid mobile money number to debit. ex : 22997000000 </td></tr>
+<tr><td>phone</td><td>String</td><td>Yes</td><td>Valid mobile money number to debit. ex : 22967434270 </td></tr>
 <tr><td>amount</td><td>Numeric</td><td>Yes</td><td>Amount to debit from user account (XOF) </td></tr>
 <tr><td>name</td><td>String</td><td>No</td><td>Client firstname and lastname </td></tr>
-<tr><td>email</td><td>String</td><td>No</td><td>Client email address </td></tr>
+<tr><td>partnerId</td><td>String</td><td>No</td><td>Your id to find transaction</td></tr>
+<tr><td>countries</td><td>List of String</td><td>No</td><td>Set widget countries ex: ["CI"] </td></tr>
+<tr><td>paymentMethods</td><td>List of String</td><td>No</td><td>Set widget payment methods ex: ["momo","card"] </td></tr>
 <tr><td>theme</td><td>String</td><td>No</td><td> the hexadecimal code of the color you want to give to your widget </td></tr>
 <tr><td>apikey</td><td>String</td><td>Yes</td><td>public api key</td></tr>
 <tr><td>sandbox</td><td>Boolean</td><td>No</td><td>The true value of this attribute allows you to switch to test mode</td></tr>
-<tr><td>successCallback</td><td>Function</td><td>No</td><td>This function is called once the payment has been successfully made</td></tr>
+<tr><td>successCallback</td><td>Function</td><td>Yes</td><td>This function is called once the payment has been successfully made</td></tr>
 </table>
 
 ### Issues and feedback
